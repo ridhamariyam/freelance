@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useToast } from '../context/ToastContext'
 
 export default function InstallBanner() {
   const [prompt, setPrompt] = useState(null)
   const [dismissed, setDismissed] = useState(() =>
     localStorage.getItem('lb_install_dismissed') === '1'
   )
+  const { addToast } = useToast()
 
   useEffect(() => {
     const handler = (e) => {
@@ -20,7 +22,14 @@ export default function InstallBanner() {
   const install = async () => {
     prompt.prompt()
     const { outcome } = await prompt.userChoice
-    if (outcome === 'accepted') setPrompt(null)
+    if (outcome === 'accepted') {
+      setPrompt(null)
+      addToast({
+        message: 'App installed! Open it from your home screen.',
+        type: 'success',
+        duration: 5000,
+      })
+    }
   }
 
   const dismiss = () => {
@@ -39,12 +48,7 @@ export default function InstallBanner() {
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path
-            d="M5 19h14"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+          <path d="M5 19h14" stroke="white" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </div>
       <div className="flex-1 min-w-0">

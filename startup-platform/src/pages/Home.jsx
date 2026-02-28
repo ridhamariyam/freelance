@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Card from '../components/Card'
 import SearchBar from '../components/SearchBar'
 import CategoryFilter from '../components/CategoryFilter'
+import NotificationBell from '../components/NotificationBell'
 import { useApp } from '../context/AppContext'
 import { useRecentlyViewed } from '../hooks/useRecentlyViewed'
 
@@ -53,10 +54,15 @@ export default function Home() {
   return (
     <main className="pb-nav page-enter">
       {/* Top bar */}
-      <div className="px-4 pt-5 pb-1">
-        <p className="text-sm text-gray-500 dark:text-gray-400">{getGreeting()}</p>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">Launchbase</h1>
-        <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">Discover what's being built</p>
+      <div className="px-4 pt-5 pb-1 flex items-start justify-between">
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{getGreeting()}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">Launchbase</h1>
+          <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">Discover what's being built</p>
+        </div>
+        <div className="mt-1">
+          <NotificationBell />
+        </div>
       </div>
 
       {/* Search with live suggestions */}

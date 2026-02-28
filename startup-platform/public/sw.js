@@ -1,11 +1,22 @@
-const CACHE = 'launchbase-v1';
-const PRECACHE = ['/', '/index.html', '/offline.html', '/manifest.json', '/icons/icon.svg'];
+// Bump CACHE name whenever you deploy — forces old caches to clear
+const CACHE = 'launchbase-v2';
+const PRECACHE = [
+  '/',
+  '/index.html',
+  '/offline.html',
+  '/manifest.json',
+  '/icons/icon.svg',
+];
 
+// ─── Install: precache shell ──────────────────────────────────────────────
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(PRECACHE))
+  );
   self.skipWaiting();
 });
 
+// ─── Activate: clean old caches ───────────────────────────────────────────
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
@@ -15,40 +26,63 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
+// ─── Fetch ────────────────────────────────────────────────────────────────
 self.addEventListener('fetch', (e) => {
   const { request } = e;
   const url = new URL(request.url);
 
-  // Skip non-GET and cross-origin
-  if (request.method !== 'GET' || url.origin !== location.origin) return;
+  // Only handle same-origin GET requests
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Navigation: network-first, fall back to index.html, then offline page
+  // Navigation requests (HTML pages, SPA routes):
+  //   Cache-first with background revalidation.
+  //   Always falls back to /index.html so deep links and iOS "Add to Home Screen"
+  //   work correctly without a server round-trip.
   if (request.mode === 'navigate') {
     e.respondWith(
-      fetch(request)
-        .then((res) => {
-          const clone = res.clone();
-          caches.open(CACHE).then((c) => c.put(request, clone));
-          return res;
-        })
-        .catch(() =>
-          caches.match('/index.html').then((r) => r || caches.match('/offline.html'))
-        )
+      caches.match('/index.html').then((cached) => {
+        // Revalidate index.html in the background
+        const revalidate = fetch('/index.html')
+          .then((res) => {
+            if (res.ok) {
+              caches.open(CACHE).then((c) => c.put('/index.html', res.clone()));
+            }
+            return res;
+          })
+          .catch(() => null);
+
+        // Serve from cache immediately (critical for iOS offline)
+        return cached || revalidate || caches.match('/offline.html');
+      })
     );
     return;
   }
 
-  // Assets: cache-first, update in background
+  // Static assets (JS, CSS, images, fonts):
+  //   Cache-first. Fetch from network if not cached, then store.
   e.respondWith(
     caches.match(request).then((cached) => {
-      const network = fetch(request).then((res) => {
-        if (res.ok) {
-          const clone = res.clone();
-          caches.open(CACHE).then((c) => c.put(request, clone));
-        }
-        return res;
-      });
-      return cached || network;
+      if (cached) {
+        // Refresh in background
+        fetch(request)
+          .then((res) => {
+            if (res.ok) {
+              caches.open(CACHE).then((c) => c.put(request, res));
+            }
+          })
+          .catch(() => {});
+        return cached;
+      }
+
+      return fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE).then((c) => c.put(request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match('/offline.html'));
     })
   );
 });
