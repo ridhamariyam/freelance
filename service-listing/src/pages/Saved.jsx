@@ -14,15 +14,15 @@ function EmptySaved() {
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h2 className="text-lg font-bold text-gray-900 mb-2">No saved services yet</h2>
+      <h2 className="text-lg font-bold text-gray-900 mb-2">No saved startups yet</h2>
       <p className="text-sm text-gray-500 mb-6 max-w-xs leading-relaxed">
-        Tap the heart icon on any service to save it here for quick access later.
+        Tap the heart icon on any startup to save it here for quick access later.
       </p>
       <button
         onClick={() => navigate('/listings')}
         className="btn-primary px-6"
       >
-        Explore Services
+        Explore Startups
       </button>
     </div>
   )
@@ -40,11 +40,11 @@ export default function Saved() {
   return (
     <div className="min-h-screen bg-gray-50 pb-nav animate-fade-in">
       {/* Header */}
-      <div className="bg-white px-4 pt-14 pb-4 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white px-4 pt-14 pb-4 sticky top-0 z-30 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]">
         <h1 className="text-[22px] font-bold text-gray-900 tracking-tight">Saved</h1>
         {!isLoading && savedServices.length > 0 && (
           <p className="text-sm text-gray-500 mt-0.5">
-            {savedServices.length} service{savedServices.length !== 1 ? 's' : ''} saved
+            {savedServices.length} startup{savedServices.length !== 1 ? 's' : ''} saved
           </p>
         )}
       </div>

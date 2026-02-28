@@ -1,73 +1,56 @@
 import { useNavigate } from 'react-router-dom'
 
-// Icon paths keyed by category id
 const ICONS = {
-  ac: (
+  saas: (
     <>
-      <line x1="12" y1="2" x2="12" y2="22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <line x1="5.5" y1="5.5" x2="18.5" y2="18.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <line x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <path d="M8 21h8M12 17v4" strokeLinecap="round" />
     </>
   ),
-  cleaning: (
+  startup: (
     <>
-      <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" strokeLinecap="round" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" strokeLinecap="round" />
     </>
   ),
-  electrical: (
-    <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-  ),
-  plumbing: (
+  funding: (
     <>
-      <path d="M12 22a8 8 0 0 1-8-8c0-3.5 2-6.5 5-8l1 3 2-5 2 5 1-3c3 1.5 5 4.5 5 8a8 8 0 0 1-8 8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <line x1="12" y1="1" x2="12" y2="23" strokeLinecap="round" />
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" strokeLinecap="round" />
     </>
   ),
-  automotive: (
+  agency: (
     <>
-      <rect x="1" y="8" width="22" height="10" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M4 8V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="7" cy="18" r="2" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="17" cy="18" r="2" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points="9 22 9 12 15 12 15 22" />
     </>
   ),
-  beauty: (
+  resources: (
     <>
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M8.5 14s1.5 2 3.5 2 3.5-2 3.5-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-      <circle cx="9" cy="10" r="1" fill="currentColor" />
-      <circle cx="15" cy="10" r="1" fill="currentColor" />
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" strokeLinecap="round" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
     </>
   ),
-  moving: (
+  jobs: (
     <>
-      <rect x="1" y="6" width="15" height="12" rx="1" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M16 9h4l3 3v5h-7V9z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <circle cx="5.5" cy="18" r="2" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="18.5" cy="18" r="2" stroke="currentColor" strokeWidth="2" fill="none" />
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" strokeLinecap="round" />
     </>
   ),
-  security: (
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-  ),
-  gardening: (
+  community: (
     <>
-      <path d="M12 22V12M12 12C12 7 8 4 4 5c1 4 4 7 8 7zM12 12C12 7 16 4 20 5c-1 4-4 7-8 7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M6 22h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" strokeLinecap="round" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" strokeLinecap="round" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" strokeLinecap="round" />
     </>
   ),
-  handyman: (
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-  ),
-  wellness: (
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-  ),
-  laundry: (
+  services: (
     <>
-      <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="13" r="5" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="13" r="2" stroke="currentColor" strokeWidth="2" fill="none" />
-      <line x1="6" y1="7" x2="6.01" y2="7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
     </>
   ),
 }
@@ -77,20 +60,18 @@ export default function CategoryCard({ id, label, color, bg }) {
 
   return (
     <button
-      className="flex flex-col items-center gap-2 active:scale-95 transition-transform duration-150 select-none"
       onClick={() => navigate(`/listings?category=${id}`)}
+      className="flex flex-col items-center gap-2 active:scale-90 transition-transform duration-150 select-none w-full"
     >
       <div
-        className="w-16 h-16 rounded-2xl flex items-center justify-center"
+        className="w-14 h-14 rounded-2xl flex items-center justify-center"
         style={{ backgroundColor: bg }}
       >
-        <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" style={{ color }}>
-          {ICONS[id] || (
-            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
-          )}
+        <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.7} className="w-[22px] h-[22px]">
+          {ICONS[id]}
         </svg>
       </div>
-      <span className="text-[11px] font-medium text-gray-600 text-center leading-tight w-16">
+      <span className="text-[11px] font-semibold text-gray-600 text-center leading-tight w-full">
         {label}
       </span>
     </button>

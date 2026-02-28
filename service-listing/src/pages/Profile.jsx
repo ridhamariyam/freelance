@@ -94,19 +94,19 @@ export default function Profile() {
         {/* Avatar + info */}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-18 h-18 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-2xl font-bold w-[72px] h-[72px]">
+            <div className="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-2xl font-bold">
               A
             </div>
             <div className="absolute bottom-0 right-0 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-gray-900">Ahmed Al-Rashid</h2>
-            <p className="text-sm text-gray-500">ahmed.alrashid@email.com</p>
+            <h2 className="text-lg font-bold text-gray-900">Alex Founder</h2>
+            <p className="text-sm text-gray-500">alex@nexus.app</p>
             <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 text-primary-600">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
               </svg>
-              Doha, Qatar
+              San Francisco, CA
             </div>
           </div>
           <button
@@ -120,9 +120,9 @@ export default function Profile() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-gray-100">
           {[
-            { value: '12', label: 'Bookings' },
             { value: `${favoriteIds.length}`, label: 'Saved' },
-            { value: '4', label: 'Reviews' },
+            { value: '24', label: 'Upvoted' },
+            { value: '8', label: 'Following' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="text-xl font-bold text-gray-900">{value}</p>
@@ -132,24 +132,24 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* ── Booking History ── */}
+      {/* ── Recent Activity ── */}
       <div className="mx-4 mt-4 card p-4">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-[13px] font-semibold text-gray-900">Recent Booking</h3>
+          <h3 className="text-[13px] font-semibold text-gray-900">Recent Activity</h3>
           <span className="text-xs text-primary-600 font-medium">View all</span>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center shrink-0">
             <svg viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth={1.8} className="w-6 h-6">
-              <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-gray-900 truncate">Electrician Services</p>
-            <p className="text-xs text-gray-500 mt-0.5">PowerPro Electric · Feb 20, 2026</p>
+            <p className="text-sm font-semibold text-gray-900 truncate">Upvoted Flowboard</p>
+            <p className="text-xs text-gray-500 mt-0.5">SaaS Tools · Feb 27, 2026</p>
           </div>
-          <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
-            Done
+          <span className="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded-lg shrink-0">
+            +1 ▲
           </span>
         </div>
       </div>
@@ -180,8 +180,7 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* Version */}
-      <p className="text-center text-xs text-gray-400 pb-4 mt-2">Serviq v1.0.0</p>
+      <p className="text-center text-xs text-gray-400 pb-4 mt-2">Nexus v1.0.0</p>
     </div>
   )
 }

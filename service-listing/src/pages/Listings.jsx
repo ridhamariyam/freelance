@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useServices } from '../hooks/useServices'
 import { useFavorites } from '../hooks/useFavorites'
@@ -9,10 +9,10 @@ import { CATEGORIES } from '../utils/categories'
 import { filterServices, sortServices } from '../utils/helpers'
 
 const SORT_OPTIONS = [
-  { value: 'default', label: 'Recommended' },
-  { value: 'rating', label: 'Top Rated' },
-  { value: 'price', label: 'Lowest Price' },
-  { value: 'reviews', label: 'Most Reviewed' },
+  { value: 'default',  label: 'Recommended' },
+  { value: 'rating',   label: 'Top Rated' },
+  { value: 'upvotes',  label: 'Most Upvoted' },
+  { value: 'newest',   label: 'Newest First' },
 ]
 
 export default function Listings() {
@@ -20,20 +20,18 @@ export default function Listings() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const initialCategory = searchParams.get('category') || 'all'
-  const initialSearch = searchParams.get('search') || ''
+  const initialSearch   = searchParams.get('search')   || ''
   const initialFeatured = searchParams.get('featured') === 'true'
 
-  const [search, setSearch] = useState(initialSearch)
+  const [search, setSearch]               = useState(initialSearch)
   const [activeCategory, setActiveCategory] = useState(initialCategory)
-  const [sortBy, setSortBy] = useState('default')
-  const [showSort, setShowSort] = useState(false)
+  const [sortBy, setSortBy]               = useState('default')
+  const [showSort, setShowSort]           = useState(false)
 
   const { data: services, isLoading } = useServices()
   const { isFavorite, toggleFavorite } = useFavorites()
 
-  const searchRef = useRef(null)
-
-  // Sync search → URL
+  // Sync state → URL
   useEffect(() => {
     const params = {}
     if (activeCategory !== 'all') params.category = activeCategory
@@ -57,7 +55,7 @@ export default function Listings() {
   return (
     <div className="min-h-screen bg-gray-50 pb-nav animate-fade-in">
       {/* ── Sticky Header ── */}
-      <div className="bg-white sticky top-0 z-30 shadow-sm">
+      <div className="bg-white sticky top-0 z-30 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]">
         <div className="flex items-center gap-3 px-4 pt-12 pb-3">
           <button
             onClick={() => navigate(-1)}
@@ -70,7 +68,7 @@ export default function Listings() {
           <SearchBar
             value={search}
             onChange={setSearch}
-            placeholder="Search services..."
+            placeholder="Search startups, tools..."
           />
         </div>
 
@@ -99,7 +97,7 @@ export default function Listings() {
             <span className="inline-block w-24 h-4 bg-gray-200 rounded animate-shimmer" />
           ) : (
             <span>
-              <span className="font-semibold text-gray-900">{filtered.length}</span> services found
+              <span className="font-semibold text-gray-900">{filtered.length}</span> startups found
             </span>
           )}
         </p>
@@ -123,10 +121,7 @@ export default function Listings() {
                 {SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => {
-                      setSortBy(opt.value)
-                      setShowSort(false)
-                    }}
+                    onClick={() => { setSortBy(opt.value); setShowSort(false) }}
                     className={`w-full text-left px-4 py-3 text-sm transition-colors active:bg-gray-50 ${
                       sortBy === opt.value
                         ? 'text-primary-600 font-semibold bg-primary-50'
@@ -179,7 +174,7 @@ function EmptyState({ query, onReset }) {
       <p className="text-sm text-gray-500 max-w-xs mb-5">
         {query
           ? `We couldn't find anything for "${query}". Try a different search.`
-          : 'No services in this category yet. Try another category.'}
+          : 'No startups in this category yet. Try another.'}
       </p>
       <button onClick={onReset} className="btn-primary px-6 py-2.5 text-sm">
         Clear filters
