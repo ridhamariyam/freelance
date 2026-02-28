@@ -35,7 +35,7 @@ export default function NotificationsPanel({
     const permission = await Notification.requestPermission()
     if (permission === 'granted') {
       new Notification('Launchbase', {
-        body: 'You'll now get notified about new startups and updates.',
+        body: "You'll now get notified about new startups and updates.",
         icon: '/icons/icon-192.png',
       })
       addToast({ message: 'Push notifications enabled!', type: 'success' })
