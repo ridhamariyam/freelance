@@ -5,10 +5,15 @@ const navItems = [
     to: '/',
     label: 'Home',
     icon: (active) => (
-      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={active ? 0 : 1.8} className="w-6 h-6">
-        <path d="M3 12L12 3l9 9" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 21V12h6v9" strokeLinecap="round" strokeLinejoin="round" fill={active ? 'currentColor' : 'none'} />
-        <path fillRule="evenodd" d="M2.879 11.879a3 3 0 0 1 0-4.243l7.5-7.5a3 3 0 0 1 4.243 0l7.5 7.5A3 3 0 0 1 21 10.257V19a2 2 0 0 1-2 2h-4a1 1 0 0 1-1-1v-5H10v5a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2v-8.743a3 3 0 0 1 .879-2.378z" fill={active ? 'currentColor' : 'none'} stroke="none" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 0 : 1.8} className="w-[22px] h-[22px]">
+        {active ? (
+          <path fillRule="evenodd" fill="currentColor" stroke="none" d="M2.879 11.879a3 3 0 0 1 0-4.243l7.5-7.5a3 3 0 0 1 4.243 0l7.5 7.5A3 3 0 0 1 21 10.257V19a2 2 0 0 1-2 2h-4a1 1 0 0 1-1-1v-5H10v5a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2v-8.743a3 3 0 0 1 .879-2.378z" />
+        ) : (
+          <>
+            <path d="M3 12L12 3l9 9" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M9 21V12h6v9" strokeLinecap="round" strokeLinejoin="round" />
+          </>
+        )}
       </svg>
     ),
     exact: true,
@@ -17,7 +22,7 @@ const navItems = [
     to: '/listings',
     label: 'Explore',
     icon: (active) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-[22px] h-[22px]">
         <circle cx="11" cy="11" r="8" strokeLinecap="round" />
         <path d="m21 21-4.35-4.35" strokeLinecap="round" />
         {active && <circle cx="11" cy="11" r="3" fill="currentColor" stroke="none" />}
@@ -28,7 +33,7 @@ const navItems = [
     to: '/saved',
     label: 'Saved',
     icon: (active) => (
-      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={1.8} className="w-[22px] h-[22px]">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
@@ -37,7 +42,7 @@ const navItems = [
     to: '/profile',
     label: 'Profile',
     icon: (active) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-[22px] h-[22px]">
         <circle cx="12" cy="8" r="4" fill={active ? 'currentColor' : 'none'} strokeLinecap="round" />
         <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -53,7 +58,7 @@ export default function BottomNavbar() {
       className="fixed bottom-0 inset-x-0 bg-white shadow-nav z-50"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      <div className="flex items-center justify-around h-[60px]">
+      <div className="flex items-stretch h-[62px]">
         {navItems.map(({ to, label, icon, exact }) => {
           const active = exact
             ? location.pathname === to
@@ -63,13 +68,22 @@ export default function BottomNavbar() {
             <NavLink
               key={to}
               to={to}
-              className={`flex flex-col items-center gap-0.5 px-4 py-1.5 min-w-[60px] transition-colors duration-150 ${
-                active ? 'text-primary-600' : 'text-gray-400'
-              }`}
+              className="flex flex-col items-center justify-center flex-1 gap-1 transition-colors duration-150 relative"
             >
-              {icon(active)}
+              {/* Active top indicator */}
               <span
-                className={`text-[10px] font-medium tracking-wide leading-none ${
+                className={`absolute top-0 left-1/2 -translate-x-1/2 h-[3px] rounded-full transition-all duration-200 ${
+                  active ? 'w-8 bg-primary-600' : 'w-0 bg-transparent'
+                }`}
+              />
+              {/* Icon with active pill */}
+              <div className={`flex items-center justify-center w-10 h-7 rounded-full transition-colors duration-200 ${
+                active ? 'bg-primary-50 text-primary-600' : 'text-gray-400'
+              }`}>
+                {icon(active)}
+              </div>
+              <span
+                className={`text-[10px] font-semibold leading-none tracking-wide ${
                   active ? 'text-primary-600' : 'text-gray-400'
                 }`}
               >

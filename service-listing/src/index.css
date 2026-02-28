@@ -88,4 +88,10 @@
   .pb-nav {
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   }
+
+  /* Prevent image drag on cards */
+  .card img {
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
 }
