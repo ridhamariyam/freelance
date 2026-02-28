@@ -1,0 +1,1 @@
+import{r}from"./vendor-CK5te7td.js";const c="lb_recent",u=3;function i(){try{return JSON.parse(localStorage.getItem(c)||"[]")}catch{return[]}}function S(){const[n,o]=r.useState(i),s=r.useCallback(t=>{o(a=>{const e=[t,...a.filter(l=>l!==t)].slice(0,u);return localStorage.setItem(c,JSON.stringify(e)),e})},[]);return{recent:n,track:s}}export{S as u};

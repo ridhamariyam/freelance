@@ -1,0 +1,38 @@
+[
+  {
+    "id": "p1",
+    "author": "Maya Chen",
+    "role": "Founder @ Verdant",
+    "initials": "MC",
+    "avatarColor": "bg-emerald-500",
+    "content": "Just closed our seed round after 6 months of pipeline work, 60+ investor calls, and a final 8-week process. Happy to share what worked (and what didn't) if anyone is currently fundraising. Drop your questions below.",
+    "time": "2h ago",
+    "likes": 47,
+    "replies": 12,
+    "liked": false
+  },
+  {
+    "id": "p2",
+    "author": "Arjun Patel",
+    "role": "Product Lead @ Flowboard",
+    "initials": "AP",
+    "avatarColor": "bg-indigo-500",
+    "content": "Hot take: most startup landing pages say too much. We cut our homepage copy by 60%, added one clear CTA, and conversion went up 34% in two weeks. Less is genuinely more — especially above the fold.",
+    "time": "5h ago",
+    "likes": 89,
+    "replies": 23,
+    "liked": false
+  },
+  {
+    "id": "p3",
+    "author": "Sofia Morales",
+    "role": "Growth Lead",
+    "initials": "SM",
+    "avatarColor": "bg-pink-500",
+    "content": "Looking for a co-founder with a strong engineering background. Building in the compliance automation space — early traction, pre-revenue, based in Berlin but remote-first. Ideally someone who has shipped B2B SaaS before. DM if interested.",
+    "time": "1d ago",
+    "likes": 31,
+    "replies": 8,
+    "liked": false
+  }
+]

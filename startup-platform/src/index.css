@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+    overscroll-behavior: none;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .pb-nav { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+  .h-screen-safe { height: 100dvh; }
+
+  /* CSS variable for dark-aware nav icon fill */
+  :root  { --nav-fill: #EEF0FE; }
+  .dark  { --nav-fill: rgba(91, 108, 246, 0.25); }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
+
+@layer components {
+  /* ─── Page transition ─────────────────────────── */
+  .page-enter {
+    animation: pageEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Card stagger entrance ───────────────────── */
+  .card-stagger {
+    animation: cardEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--stagger, 0ms);
+  }
+  @keyframes cardEnter {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Shimmer skeleton ────────────────────────── */
+  .skeleton {
+    @apply rounded-lg;
+    background: linear-gradient(90deg, #f0f2f5 0%, #e4e7ec 45%, #f0f2f5 100%);
+    background-size: 400px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  .dark .skeleton {
+    background: linear-gradient(90deg, #1e293b 0%, #253347 45%, #1e293b 100%);
+    background-size: 400px 100%;
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  /* ─── Bottom sheet ────────────────────────────── */
+  .sheet-up {
+    animation: sheetUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes sheetUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* ─── Heart pop (like button) ─────────────────── */
+  .heart-pop {
+    animation: heartPop 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes heartPop {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.45); }
+    65%  { transform: scale(0.88); }
+    100% { transform: scale(1); }
+  }
+
+  /* ─── Image reveal on load ────────────────────── */
+  @keyframes imgReveal {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .img-reveal {
+    animation: imgReveal 0.5s ease-out both;
+  }
+
+  /* ─── Slide down (install banner) ────────────── */
+  .slide-down {
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Fade scale (badges/chips) ──────────────── */
+  .fade-scale-in {
+    animation: fadeScale 0.2s ease-out both;
+    animation-delay: var(--stagger, 0ms);
+  }
+  @keyframes fadeScale {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── Buttons ─────────────────────────────────── */
+  .btn-primary {
+    @apply bg-[#5B6CF6] text-white font-semibold rounded-xl px-5 py-3
+           active:scale-[0.97] transition-transform text-sm;
+  }
+  .btn-ghost {
+    @apply bg-gray-100 text-gray-700 font-semibold rounded-xl px-5 py-3
+           active:scale-[0.97] transition-transform text-sm;
+  }
+
+  /* ─── Chip ────────────────────────────────────── */
+  .chip {
+    @apply inline-flex items-center text-xs font-medium rounded-full px-2.5 py-1;
+  }
+}
